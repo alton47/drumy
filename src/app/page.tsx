@@ -46,7 +46,6 @@ const soundData: Record<
 };
 
 export default function Drumy() {
-  const [isLight, setIsLight] = useState(false);
   const [layout, setLayout] = useState<string[][]>([]);
   const audioCtx = useRef<AudioContext | null>(null);
 
@@ -70,15 +69,20 @@ export default function Drumy() {
     };
 
     handleResize();
+    const handleKeydown = (e: KeyboardEvent) => trigger(e.key.toUpperCase());
+
     window.addEventListener("resize", handleResize);
-    window.addEventListener("keydown", (e) => trigger(e.key.toUpperCase()));
+    window.addEventListener("keydown", handleKeydown);
+
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("keydown", (e) =>
-        trigger(e.key.toUpperCase()),
-      );
+      window.removeEventListener("keydown", handleKeydown);
     };
   }, []);
+
+  const toggleMode = () => {
+    document.body.classList.toggle("light");
+  };
 
   const trigger = (key: string) => {
     const s = soundData[key];
@@ -90,10 +94,11 @@ export default function Drumy() {
       setTimeout(() => pad.classList.remove("active"), 120);
     }
 
-    if (!audioCtx.current)
+    if (!audioCtx.current) {
       audioCtx.current = new (
         window.AudioContext || (window as any).webkitAudioContext
       )();
+    }
     const ctx = audioCtx.current;
     if (ctx.state === "suspended") ctx.resume();
 
@@ -120,24 +125,16 @@ export default function Drumy() {
   };
 
   return (
-    <main
-      className={`app w-full h-full flex flex-col items-center justify-center p-[10px] relative ${isLight ? "light" : ""}`}
-    >
-      <div
-        className="toggle"
-        onClick={() => {
-          setIsLight(!isLight);
-          document.body.classList.toggle("light");
-        }}
-      />
+    <main className="w-full h-full flex flex-col items-center justify-center p-[10px] relative">
+      <div className="toggle-btn" onClick={toggleMode} />
 
       <header className="text-center mb-[clamp(10px,4vh,20px)]">
         <h1 className="m-0 text-[clamp(24px,6vw,36px)] font-bold">Drumy 🥁</h1>
       </header>
 
-      <div className="keyboard flex flex-col gap-2 w-full max-w-[900px]">
+      <div className="flex flex-col gap-2 w-full max-w-[900px]">
         {layout.map((row, rIdx) => (
-          <div key={rIdx} className="row flex gap-2 justify-center w-full">
+          <div key={rIdx} className="flex gap-2 justify-center w-full">
             {row.map((key, kIdx) => (
               <div
                 key={key}
@@ -154,10 +151,10 @@ export default function Drumy() {
                   trigger(key);
                 }}
               >
-                <span className="key text-[clamp(14px,3.5vw,20px)] font-extrabold pointer-events-none">
+                <span className="text-[clamp(14px,3.5vw,20px)] font-extrabold pointer-events-none">
                   {key}
                 </span>
-                <span className="type text-[clamp(7px,1.8vw,10px)] opacity-60 mt-[2px] capitalize pointer-events-none">
+                <span className="text-[clamp(7px,1.8vw,10px)] opacity-60 mt-[2px] capitalize pointer-events-none">
                   {soundData[key].name}
                 </span>
               </div>
@@ -166,7 +163,7 @@ export default function Drumy() {
         ))}
       </div>
 
-      <div className="credit absolute bottom-3 text-[11px] opacity-50">
+      <div className="absolute bottom-3 text-[11px] opacity-50">
         made with ❤️{" "}
         <a
           href="https://github.com/alton47"
