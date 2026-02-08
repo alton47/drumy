@@ -30,7 +30,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.35s ease;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease;
 }
 
 body.light {
@@ -42,6 +44,35 @@ body.light {
   color: var(--text-light);
 }
 
+/* The Toggle Button */
+.toggle-btn {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-dark);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+body.light .toggle-btn {
+  border-color: var(--border-light);
+}
+
+.toggle-btn::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+/* The Pads */
 .pad {
   flex: 0 1 calc(10% - 8px);
   min-width: 0;
@@ -65,6 +96,7 @@ body.light .pad {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Color Flash Logic */
 .pad::before {
   content: "";
   position: absolute;
