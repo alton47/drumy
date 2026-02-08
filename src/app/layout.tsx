@@ -1,16 +1,26 @@
 import "./globals.css";
-import { ReactNode } from "react";
+import type { Metadata, Viewport } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Drumy 🥁",
+  description: "A responsive keyboard drum machine",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className="bg-[radial-gradient(circle_at_top,_#1b2350,_var(--bg-dark))] text-white">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
