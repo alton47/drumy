@@ -16,32 +16,32 @@ const soundData: Record<
   string,
   { type: OscillatorType; freq: number; noise: boolean; name: string }
 > = {
-  Q: { type: "sine", freq: 120, noise: true, name: "kick" },
-  W: { type: "triangle", freq: 200, noise: false, name: "snare" },
-  E: { type: "square", freq: 300, noise: true, name: "hi-hat" },
-  R: { type: "sawtooth", freq: 150, noise: false, name: "tom" },
-  T: { type: "sine", freq: 220, noise: true, name: "metal" },
-  Z: { type: "triangle", freq: 180, noise: false, name: "clap" },
-  U: { type: "square", freq: 250, noise: true, name: "rim" },
-  I: { type: "sine", freq: 140, noise: false, name: "shaker" },
-  O: { type: "sawtooth", freq: 320, noise: true, name: "cowbell" },
-  P: { type: "triangle", freq: 210, noise: false, name: "tamb" },
-  A: { type: "square", freq: 190, noise: true, name: "kick2" },
-  S: { type: "sine", freq: 170, noise: false, name: "snare2" },
-  D: { type: "sawtooth", freq: 260, noise: true, name: "hat2" },
-  F: { type: "triangle", freq: 240, noise: false, name: "tom2" },
-  G: { type: "sine", freq: 200, noise: true, name: "metal2" },
-  H: { type: "square", freq: 180, noise: false, name: "clap2" },
-  J: { type: "sawtooth", freq: 230, noise: true, name: "rim2" },
-  K: { type: "triangle", freq: 250, noise: false, name: "shaker2" },
-  L: { type: "sine", freq: 210, noise: true, name: "cowbell2" },
-  Y: { type: "square", freq: 190, noise: false, name: "tamb2" },
-  X: { type: "sawtooth", freq: 220, noise: true, name: "kick3" },
-  C: { type: "triangle", freq: 200, noise: false, name: "snare3" },
-  V: { type: "sine", freq: 240, noise: true, name: "hat3" },
-  B: { type: "square", freq: 260, noise: false, name: "tom3" },
-  N: { type: "sawtooth", freq: 230, noise: true, name: "metal3" },
-  M: { type: "triangle", freq: 210, noise: false, name: "clap3" },
+  Q: { type: "sine", freq: 120, noise: true, name: "Kick" },
+  W: { type: "triangle", freq: 200, noise: false, name: "Snare" },
+  E: { type: "square", freq: 300, noise: true, name: "Hi-hat" },
+  R: { type: "sawtooth", freq: 150, noise: false, name: "Tom" },
+  T: { type: "sine", freq: 220, noise: true, name: "Metal" },
+  Z: { type: "triangle", freq: 180, noise: false, name: "Clap" },
+  U: { type: "square", freq: 250, noise: true, name: "Rim" },
+  I: { type: "sine", freq: 140, noise: false, name: "Shaker" },
+  O: { type: "sawtooth", freq: 320, noise: true, name: "Cowbell" },
+  P: { type: "triangle", freq: 210, noise: false, name: "Tamb" },
+  A: { type: "square", freq: 190, noise: true, name: "Kick2" },
+  S: { type: "sine", freq: 170, noise: false, name: "Snare2" },
+  D: { type: "sawtooth", freq: 260, noise: true, name: "Hat2" },
+  F: { type: "triangle", freq: 240, noise: false, name: "Tom2" },
+  G: { type: "sine", freq: 200, noise: true, name: "Metal2" },
+  H: { type: "square", freq: 180, noise: false, name: "Clap2" },
+  J: { type: "sawtooth", freq: 230, noise: true, name: "Rim2" },
+  K: { type: "triangle", freq: 250, noise: false, name: "Shaker2" },
+  L: { type: "sine", freq: 210, noise: true, name: "Cowbell2" },
+  Y: { type: "square", freq: 190, noise: false, name: "Tamb2" },
+  X: { type: "sawtooth", freq: 220, noise: true, name: "Kick3" },
+  C: { type: "triangle", freq: 200, noise: false, name: "Snare3" },
+  V: { type: "sine", freq: 240, noise: true, name: "Hat3" },
+  B: { type: "square", freq: 260, noise: false, name: "Tom3" },
+  N: { type: "sawtooth", freq: 230, noise: true, name: "Metal3" },
+  M: { type: "triangle", freq: 210, noise: false, name: "Clap3" },
 };
 
 export default function Home() {
@@ -49,6 +49,7 @@ export default function Home() {
     new (window.AudioContext || (window as any).webkitAudioContext)(),
   );
   const [isLight, setIsLight] = useState(false);
+
   const layout = [
     ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -90,7 +91,7 @@ export default function Home() {
   const trigger = (key: string) => {
     const pad = document.querySelector<HTMLDivElement>(`[data-key="${key}"]`);
     if (!pad) return;
-    pad.classList.add("scale-95 shadow-[0_0_20px_var(--accent)]");
+    pad.classList.add("scale-95", "shadow-[0_0_20px_var(--accent)]");
     setTimeout(
       () => pad.classList.remove("scale-95", "shadow-[0_0_20px_var(--accent)]"),
       120,
@@ -107,12 +108,12 @@ export default function Home() {
 
   return (
     <div
-      className={`relative w-full h-screen flex flex-col items-center justify-center transition-colors ${isLight ? "bg-[radial-gradient(circle_at_top,_var(--bg-light-accent),_var(--bg-light))] text-[#0a0d18]" : "text-white bg-[radial-gradient(circle_at_top,_#1b2350,_var(--bg-dark))]"}`}
+      className={`relative w-full h-screen flex flex-col items-center justify-center transition-colors ${isLight ? "bg-[radial-gradient(circle_at_top,_var(--bg-light-accent),_var(--bg-light))] text-[#0a0d18]" : "bg-[radial-gradient(circle_at_top,_#1b2350,_var(--bg-dark))] text-white"}`}
     >
       {/* Toggle */}
       <button
         onClick={() => setIsLight(!isLight)}
-        className="absolute top-4 right-4 w-11 h-11 rounded-full border border-current grid place-items-center"
+        className="absolute top-4 right-4 w-11 h-11 rounded-full border border-current grid place-items-center z-50"
       >
         <span className="w-4 h-4 rounded-full bg-current opacity-70"></span>
       </button>
@@ -123,9 +124,12 @@ export default function Home() {
       </header>
 
       {/* Keyboard */}
-      <div className="flex flex-col gap-2 w-full max-w-4xl">
+      <div className="flex flex-col gap-2 w-full max-w-[900px]">
         {layout.map((row, rIdx) => (
-          <div key={rIdx} className="flex gap-2 justify-center w-full">
+          <div
+            key={rIdx}
+            className={`flex gap-2 w-full justify-center ${rIdx === 1 ? "pl-[5%]" : rIdx === 2 ? "pl-[10%]" : ""}`}
+          >
             {row.map((key, kIdx) => {
               const accent = colors[(rIdx * 2 + kIdx) % colors.length];
               return (
@@ -135,7 +139,7 @@ export default function Home() {
                   style={{ "--accent": accent } as React.CSSProperties}
                   onMouseDown={() => trigger(key)}
                   onTouchStart={() => trigger(key)}
-                  className={`flex-1 aspect-square rounded-xl flex flex-col items-center justify-center cursor-pointer relative transition-transform duration-100 bg-gradient-to-br from-[#1e2550] to-[#0e1228]`}
+                  className={`flex-0 flex-shrink-0 w-[calc(10%-8px)] aspect-square rounded-xl flex flex-col items-center justify-center cursor-pointer relative transition-transform duration-100 bg-gradient-to-br from-[#1e2550] to-[#0e1228]`}
                 >
                   <span className="font-extrabold text-lg pointer-events-none">
                     {key}
